@@ -1,6 +1,12 @@
 import fs from "fs";
 import type { ChatItem } from "./type";
 
+async function sleep(sec: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, sec * 1000);
+  });
+}
+
 async function getChatList({
   beforeId,
   limit = 50,
@@ -52,8 +58,10 @@ async function saveChatList(list: ChatItem[]) {
 
     // CSV에 저장하기 위해 , 를 ，로 바꾸고, 줄바꿈을 \n문자열로 나타나게 한다.
     const sanitizedContent = content.replace(/,/g, "，").replace(/\n/g, "\\n");
+    const sanitizedUsername = author.username.replace(/,/g, "，");
+    const sanitizedGlobalName = author.global_name.replace(/,/g, "，");
 
-    const line = `${id},${author.global_name},${author.username},${sanitizedContent},${replyTo},${timestamp}\n`;
+    const line = `${id},${sanitizedGlobalName},${sanitizedUsername},${sanitizedContent},${replyTo},${timestamp}\n`;
 
     // 밑으로 추가
     fs.appendFileSync("./output/chat-list.csv", line);
@@ -81,6 +89,7 @@ async function main() {
     beforeId = list[list.length - 1].id;
 
     console.log(`Iteration: ${i} End`);
+    await sleep(1);
   }
 }
 
