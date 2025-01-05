@@ -72,6 +72,11 @@ async function main() {
   let beforeId: string | null = null;
   const limit = 50;
   const iteration = 10000; // 500,000
+  const beforeIdFromEnv = process.env.BEFORE_ID;
+
+  if (beforeIdFromEnv && beforeIdFromEnv.trim() !== "") {
+    beforeId = beforeIdFromEnv;
+  }
 
   for (let i = 0; i < iteration; i++) {
     console.log(`Iteration: ${i} Start`);
