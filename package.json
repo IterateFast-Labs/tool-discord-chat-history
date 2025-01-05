@@ -1,14 +1,14 @@
 {
   "name": "tool-discord-chat-history",
   "module": "index.ts",
-  "type": "module",
-  "scripts": {
-    "start": "bun run ./src/index.ts"
-  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "scripts": {
+    "start": "bun run ./src/index.ts"
+  },
+  "type": "module"
 }
