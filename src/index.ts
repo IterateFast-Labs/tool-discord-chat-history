@@ -48,7 +48,7 @@ async function saveChatList(list: ChatItem[]) {
       continue;
     }
 
-    const replyTo = message_reference?.message_id;
+    const replyTo = message_reference?.message_id ?? "";
 
     // CSV에 저장하기 위해 , 를 ，로 바꾸고, 줄바꿈을 \n문자열로 나타나게 한다.
     const sanitizedContent = content.replace(/,/g, "，").replace(/\n/g, "\\n");
