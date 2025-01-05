@@ -70,8 +70,8 @@ async function saveChatList(list: ChatItem[]) {
 
 async function main() {
   let beforeId: string | null = null;
-  const limit = 50;
-  const iteration = 10000; // 500,000
+  const limit = 100;
+  const iteration = 1000; // 1000번 반복 = 100,000개의 메시지를 가져옴
   const beforeIdFromEnv = process.env.BEFORE_ID;
 
   if (beforeIdFromEnv && beforeIdFromEnv.trim() !== "") {
@@ -80,6 +80,7 @@ async function main() {
 
   for (let i = 0; i < iteration; i++) {
     console.log(`Iteration: ${i} Start`);
+    const start = Date.now();
     const list = await getChatList({
       beforeId,
       limit,
@@ -93,8 +94,9 @@ async function main() {
     console.log(`Saved ${list.length} items`);
     beforeId = list[list.length - 1].id;
 
-    console.log(`Iteration: ${i} End`);
-    await sleep(1);
+    await sleep(0.25);
+    const end = Date.now();
+    console.log(`Iteration: ${i} End : ${(end - start) / 1000}s`);
   }
 }
 
